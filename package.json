@@ -1,6 +1,6 @@
 {
   "name": "expo-external-scanner",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "expo plugins",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -12,6 +12,8 @@
     "lib",
     "android",
     "cpp",
+    "app.plugin.js",
+    "plugin",
     "!ios/build",
     "!android/build",
     "!android/gradle",

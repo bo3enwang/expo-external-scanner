@@ -28,7 +28,7 @@ const withAndroidMainActivityBody: ConfigPlugin = (config) => {
   // @ts-ignore
   const newConfig = withMainActivity(config, (oldConfig) => {
     const newSrc = [
-      'private ExpoExternalScannerModule externalScannerModule = KeyEventModule.getInstance();',
+      'private ExpoExternalScannerModule externalScannerModule = ExpoExternalScannerModule.getInstance();',
       '',
       '',
       '@Override',

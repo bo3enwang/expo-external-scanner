@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import android.view.KeyEvent;
+import android.view.InputDevice;
 import android.content.res.Configuration;
 import androidx.annotation.NonNull;
 
@@ -15,6 +16,8 @@ import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.bridge.WritableNativeMap;
 import com.facebook.react.module.annotations.ReactModule;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 
@@ -57,6 +60,21 @@ public class ExpoExternalScannerModule extends ReactContextBaseJavaModule {
     KeyEvent.KEYCODE_SHIFT_LEFT,
     KeyEvent.KEYCODE_ENTER
   ));
+
+  private char getInputCode(KeyEvent event) {
+      int keyCode = event.getKeyCode();
+      char aChar;
+      if (keyCode >= KeyEvent.KEYCODE_A && keyCode <= KeyEvent.KEYCODE_Z) {
+          aChar = (char) ((mCaps ? 'A' : 'a') + keyCode - KeyEvent.KEYCODE_A);
+      } else if (keyCode >= KeyEvent.KEYCODE_0 && keyCode <= KeyEvent.KEYCODE_9) {
+          aChar = (char) ('0' + keyCode - KeyEvent.KEYCODE_0);
+      } else if (keyCode == KeyEvent.KEYCODE_ENTER) {
+          aChar = 0;
+      } else {
+          aChar = (char) event.getUnicodeChar();
+      }
+      return aChar;
+  }
 
   public void append(KeyEvent event) {
     char x = getInputCode(event);

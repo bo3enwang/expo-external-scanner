@@ -31,7 +31,6 @@ const withAndroidMainActivityBody: ConfigPlugin = (config) => {
       '',
       '@Override',
       'public boolean dispatchKeyEvent(KeyEvent event) {',
-      '  Log.v("is device input ", ExpoExternalScannerModule.getInstance().isInputFromScanner(this, event)+"");',
       '  if (!ExpoExternalScannerModule.getInstance().isInputFromScanner(this, event)) {',
       '    return super.dispatchKeyEvent(event);',
       '  }',

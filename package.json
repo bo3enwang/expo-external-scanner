@@ -1,6 +1,6 @@
 {
   "name": "expo-external-scanner",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "expo plugins",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",

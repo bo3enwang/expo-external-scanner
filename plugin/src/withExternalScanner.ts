@@ -29,12 +29,13 @@ const withAndroidMainActivityBody: ConfigPlugin = (config) => {
   const newConfig = withMainActivity(config, (oldConfig) => {
     const newSrc = [
       '',
-      '',
       '@Override',
       'public boolean dispatchKeyEvent(KeyEvent event) {',
+      '  Log.v("is device input ", ExpoExternalScannerModule.getInstance().isInputFromScanner(this, event)+"");',
       '  if (!ExpoExternalScannerModule.getInstance().isInputFromScanner(this, event)) {',
       '    return super.dispatchKeyEvent(event);',
       '  }',
+      '  ExpoExternalScannerModule.getInstance().checkLetterStatus(event);',
       '  int action = event.getAction();',
       '  switch (action) {',
       '    case KeyEvent.ACTION_DOWN:',
@@ -44,6 +45,7 @@ const withAndroidMainActivityBody: ConfigPlugin = (config) => {
       '      if (ExpoExternalScannerModule.getInstance().ingnoreKeys.contains(event.getKeyCode())) {',
       '        return super.dispatchKeyEvent(event);',
       '      }',
+      '      ',
       '      if (ExpoExternalScannerModule.getInstance().isConfirmKey(event.getKeyCode())) {',
       '        ExpoExternalScannerModule.getInstance().onScannerEnd();',
       '      }',

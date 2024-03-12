@@ -9,6 +9,7 @@ import android.view.InputDevice;
 import android.content.res.Configuration;
 import android.content.Context;
 import androidx.annotation.NonNull;
+import android.util.Log;
 
 import com.facebook.react.ReactActivity;
 
@@ -33,7 +34,7 @@ public class ExpoExternalScannerModule extends ReactContextBaseJavaModule {
   private DeviceEventManagerModule.RCTDeviceEventEmitter mJSModule = null;
   private static ExpoExternalScannerModule instance = null;
 
-  public static ExpoExternalScannerModule initKeyEventModule(ReactApplicationContext reactContext) {
+  public static ExpoExternalScannerModule initModule(ReactApplicationContext reactContext) {
     instance = new ExpoExternalScannerModule(reactContext);
     return instance;
   }
@@ -99,17 +100,19 @@ public class ExpoExternalScannerModule extends ReactContextBaseJavaModule {
     if (event.getDevice() == null) {
       return false;
     }
-    if (event.getKeyCode() == KeyEvent.KEYCODE_BACK || event.getKeyCode() == KeyEvent.KEYCODE_VOLUME_DOWN || event.getKeyCode() == KeyEvent.KEYCODE_VOLUME_UP) {
+    int keyCode = event.getKeyCode();
+    if (keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.KEYCODE_VOLUME_DOWN || keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
       return false;
     }
-    if (event.getDevice().getSources() == (InputDevice.SOURCE_KEYBOARD | InputDevice.SOURCE_DPAD | InputDevice.SOURCE_CLASS_BUTTON)) {
-      return false;
-    }
+    int sources = event.getDevice().getSources();
+    // if ((sources & InputDevice.SOURCE_CLASS_BUTTON) != 0) {
+    //   return false;
+    // }
     Configuration cfg = context.getResources().getConfiguration();
     return cfg.keyboard != Configuration.KEYBOARD_UNDEFINED;
   }
 
-  private void checkLetterStatus(KeyEvent event) {
+  public void checkLetterStatus(KeyEvent event) {
     int keyCode = event.getKeyCode();
     if (keyCode == KeyEvent.KEYCODE_SHIFT_RIGHT || keyCode == KeyEvent.KEYCODE_SHIFT_LEFT) {
         if (event.getAction() == KeyEvent.ACTION_DOWN) {
@@ -143,7 +146,5 @@ public class ExpoExternalScannerModule extends ReactContextBaseJavaModule {
   public String getName() {
     return NAME;
   }
-
-
 
 }

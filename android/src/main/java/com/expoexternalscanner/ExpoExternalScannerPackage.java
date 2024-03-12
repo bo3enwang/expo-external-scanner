@@ -16,7 +16,7 @@ public class ExpoExternalScannerPackage implements ReactPackage {
   @Override
   public List<NativeModule> createNativeModules(@NonNull ReactApplicationContext reactContext) {
     List<NativeModule> modules = new ArrayList<>();
-    modules.add(new ExpoExternalScannerModule(reactContext));
+    modules.add(ExpoExternalScannerModule.initModule(reactContext));
     return modules;
   }
 
